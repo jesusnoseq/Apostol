@@ -1,0 +1,6 @@
+	{% if user.is_authenticated %}
+		<p class="rightText">Hola {{ user.username }}.</p>
+		{% include "userMenu.html" %}
+	{% else %}
+		{% include "loginForm.html" %}
+	{% endif %}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block mensaje %}
+<div class="featureBox">
+  <h1>Bienvenidos a El Apostol</h1>
+  
+	<p>Casa de apuestas online hecha con Django, jQuery y Twitter Bootstrap.</p>
+
+  {% if not user.is_authenticated %}
+  <p><a class="btnA btnA-large" href="/registro/">Registrarse</a></p>
+  {% endif %}
+</div>
+{% endblock %}
+{% block mainContent %}
+	{% include "apuestasList.html" %}
+{% endblock %}

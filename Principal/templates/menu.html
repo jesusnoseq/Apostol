@@ -1,0 +1,10 @@
+<nav class="container mainMenu">
+  <ul>
+    <!--<li class="active"><a href="/">Home</a></li>-->
+	{% for c in categorias %}
+		<li><a class="btnA" href="{{c.get_absolute_url}}">{{c.nombre}}</a></li>
+	{% empty %}
+		<li>No existen categorias creadas aun.</li>
+	{% endfor %}
+  </ul>
+</nav>

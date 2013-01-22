@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block titulo %}Crear una nueva categoria{% endblock %}
+{% block mainContent %}
+<form class="" method="post" action="">
+	{% csrf_token %}
+	<div>{{formulario}}</div>
+	<input class="btn btn-primary" type="submit" value="Crear" />
+	<input class="btn" type="reset" value="Cancelar" />
+</form>
+{% endblock %}

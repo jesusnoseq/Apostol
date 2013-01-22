@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block titulo %}Apuesta - {{apuesta}}{% endblock %}
+{% block mainContent %}
+
+    {{apuesta.titulo }}
+    {{apuesta.opciones }}
+    {{apuesta.descripcion  }}
+    {{apuesta.user }}
+   {{ apuesta.categoria }}
+   {{ apuesta.fecha_inicio }}
+   {{ apuesta.fecha_fin }}
+   {{ apuesta.estado }}
+  {{  apuesta.visibilidad }}
+  {{  apuesta.tipo }}
+
+{{ratios}}
+	<article>
+		<header>	
+			<h2>{{ apuesta.titulo }}</h2>
+		</header>
+		<section>
+			<p>opciones {{apuesta.opciones}}</p>
+			<p>ratios {{apuesta.ratios|floatformat:3}}</p>
+		</section>
+		<section>Abierta hasta {{apuesta.fecha_fin}}</section>
+		<img class="imgCategoria" src="{{ MEDIA_URL }}{{a.categoria.imagen}}" alt="{{a.categoria}}"/>
+		<div class="catboxbg" style="background: url({{ MEDIA_URL }}{{a.categoria.imagen}}) no-repeat"> </div>
+	</article>
+
+
+{% if formulario %}
+<form class="" method="post" action="">
+	{% csrf_token %}
+	<div>{{formulario}}</div>
+	<input class="btn btn-primary" type="submit" value="Apostar" />
+</form>
+{% endif %}
+{% endblock %}

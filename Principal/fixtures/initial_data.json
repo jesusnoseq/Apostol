@@ -1,0 +1,41 @@
+[
+	{
+	"model": "Principal.Categoria",
+	"pk": 1,
+	"fields": {      "slug": "futbol",      "nombre": "Fútbol",	"imagen":""  	}
+	},
+	{
+	"model": "Principal.Categoria",
+	"pk": 2,
+	"fields": {      "slug": "baloncesto",      "nombre": "Baloncesto",	"imagen":""      }
+	},
+	{
+	"model": "Principal.Categoria",
+	"pk": 3,
+	"fields": {      "slug": "F1",      "nombre": "Fórmula 1",	"imagen":""      }
+	},
+	{
+	"model": "Principal.Categoria",
+	"pk": 4,
+	"fields": {      "slug": "otras",      "nombre": "Sin categoría",	"imagen":""    }
+	},
+	{
+	"model": "Principal.Perfil",
+	"pk": 1,
+	"fields": {"user": 1,  "telefono":957500559, "dinero":1000, "fecha_nacimiento":"1989-09-06","pais":"España"}
+	},
+	{ "model": "auth.user",
+	"pk": 2,
+	"fields": {"username": "user1", "password": "pbkdf2_sha256$10000$4aZ9iNbfYtcP$AMrr6GS2Mgfg5Y8UMkwdrEFRTna94KtbB+3W6nPdvOI=", "email":"user1@mail.com"}
+	},
+	{
+	"model": "Principal.Perfil",
+	"pk": 2,
+	"fields": {"user": 2, "direccion": "sin", "telefono":957500559, "dinero":100, "fecha_nacimiento":"1989-09-06","pais":"España"}
+	},
+	{
+	"model": "Principal.Apuesta",
+	"pk": 1,
+	"fields": {"titulo": "Prueba", "opciones": "op1, op2, op3", "descripcion":"Apuesta de prueba","user":1, "categoria":4, "fecha_fin":"2014-09-01T13:20:30+03:00","estado":"a","visibilidad":"pu"}
+	}
+]

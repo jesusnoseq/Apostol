@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block titulo %}Registro de nuevo usuario{% endblock %}
+{% block mainContent %}
+	{% if formulario %}
+	<form class="" method="post" action="">
+		{% csrf_token %}
+		<div>{{formulario}}</div>
+		<input type="submit" value="Registrar" class="btnA"/>
+	</form>
+	{% endif %} 
+{% endblock %}
+	{% block footerScripts %}
+	<script>
+		$('.datepicker').datepicker()
+	</script>
+	{% endblock %}

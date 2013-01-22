@@ -1,0 +1,25 @@
+<ul class="mainList">
+{% for apuesta in apuestas %}
+<li>
+	<article>
+		<header>	
+			<h2>{{ apuesta.titulo }}</h2>
+			<div class="pull-right"><a class="btnA" href="{{ apuesta.get_absolute_url }}">Participar</a></div>
+		</header>
+		<div class="row">
+			<img class="imgCategoria span3" src="{{ MEDIA_URL }}{{apuesta.categoria.imagen}}" alt="{{apuesta.categoria}}"/>
+			<!--<div class="catboxbg" style="background: url({{ MEDIA_URL }}{{a.categoria.imagen}}) no-repeat"> </div>-->
+			<section class="span4">
+				<p>categoria {{apuesta.categoria}}</p>
+				<p>categoria img {{apuesta.categoria.imagen}}</p>
+				<p>opciones {{apuesta.opciones}}</p>
+				<p>ratios {{apuesta.ratios|floatformat:3}}</p>
+				<p>Abierta hasta el {{apuesta.fecha_fin}}</p>
+			</section>
+		</div>
+	</article>
+</li>
+{% empty %}
+	<li>No hay apuestas en este momento.</li>
+{% endfor %}
+</ul>
