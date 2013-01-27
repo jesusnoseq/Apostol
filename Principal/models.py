@@ -9,11 +9,13 @@ from django.template import defaultfilters
 
 class Perfil(models.Model):
     user = models.ForeignKey(User, unique=True)
-    direccion = models.CharField(max_length=250,blank=True)
-    telefono = models.IntegerField(blank=True,max_length=9)
     dinero = models.FloatField(default=100.0)
     fecha_nacimiento = models.DateField()
-    pais = models.CharField(max_length=100,blank=True)
+    #direccion = models.CharField(max_length=250,blank=True)
+    #telefono = models.IntegerField(blank=True,max_length=9)
+    #pais = models.CharField(max_length=100,blank=True)
+    class Meta:
+        verbose_name_plural='Perfiles'
     def __unicode__(self):
         return u"%s" % self.user.username
 

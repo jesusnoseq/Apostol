@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block titulo %}Anotaciones{% endblock %}
+{% block mainContent %}
+<div class="featureBox">
+<h2>Casa de apuestas online</h2>
+<h3>Idea</h3>
+<p>
+	Crear una web donde se puedan crear apuestas de todo tipo y no solo deportivas como suele ser habitual.
+</p>
+
+<h3>Implementación</h3>
+<p>Para la creacion de apuestas existen varios modos posibles; manualmente y automaticamente. <br/>
+La creacion de apuestas automaticas se podría hacer bien usando la API de <a href="http://developer.espn.com/" target="_blank">espn</a> 
+para el seguimeinto de deportes o bien haciendo web scraping.
+La API de <a href="http://developer.espn.com/" target="_blank">espn</a> es de pago y hacer web scraping sería algo exagerado.
+Así que el sistema de creación de apuestas se ha mantenido bastante simple de modo que solo se permiten apuestas creadas manualmente 
+donde las opciones posibles para apostar son listas y las participaciones en las apuestas son simples.
+</p>
+
+<h4>Cálculo de cuotas</h4>
+<p>La forma en la que he decidido calcular las cuotas es la europea (<a href="http://www.sportytrader.es/glosario-apuestas.htm" target="_blank">glosario de apuestas</a>). 
+	En caso de que alguna opción no tenga participantes se indica.</p>
+<h4>Creación de apuestas</h4>
+
+	
+	
+</p>
+<p>
+	Para la creacion de apuestas 
+	pq un campo con comas y no tags
+	Ratios europeos
+	pq las apuestas son asi y no con web scraping
+	
+</p>
+
+<h3>Herramientas y recursos adicionales utilizados</h3>
+<p>
+	<ul>
+		<li>Aptana como IDE para HTML, CSS, JavaScript y Python.</li>
+		<li>InkScape para crear las imágenes.</li>
+		<li>Firefox como navegador para probar el funcionamiento.</li>
+		<li>Firebug para retocar estilos y hacer debug de páginas.</li>
+		<li>Git para el control de versiones.</li>
+		<li>Twitter bootstrap como base para los estilos. Se ha utilizado para tener un reset de los estilos y
+			 una ayuda para posicionar los elementos con objetivo de hacer un diseño responsive.</li>
+		<li>jQuery como libreria JavaScript.</li>
+	</ul>
+</p>
+
+
+</div>
+{% endblock %}

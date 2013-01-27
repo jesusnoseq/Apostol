@@ -4,7 +4,7 @@
 	{% for c in categorias %}
 		<li><a class="btnA" href="{{c.get_absolute_url}}">{{c.nombre}}</a></li>
 	{% empty %}
-		<li>No existen categorias creadas aun.</li>
+		<li>No existen categorias creadas.</li>
 	{% endfor %}
   </ul>
 </nav>

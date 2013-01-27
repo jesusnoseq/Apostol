@@ -30,6 +30,8 @@ urlpatterns = patterns('',
     
     #url(r'^apuesta/(?P<id_apuesta>\d+)$','Principal.views.detalle_apuesta'),
     
+    url(r'^anotaciones/$', direct_to_template, {'template': 'anotaciones.html'}),
+    
     url('^404testing/$', direct_to_template, {'template': '404.html'}),
     #url(r'^login/$', 'auth.views.login_user'),
     url(r'^media/(?P<path>.*)$','django.views.static.serve',{'document_root':settings.MEDIA_ROOT,}),

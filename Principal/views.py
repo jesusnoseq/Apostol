@@ -34,7 +34,7 @@ def entrar(request):
                 state = "Tu cuenta no esta activa, contacta con el administrador."
         else:
             state = "Tu nombre de usuario y/o contraseña no son correctas."
-    return render_to_response('index.html',{'mensaje':state},context_instance=RequestContext(request))
+    return render_to_response('mensaje.html',{'mensaje':state},context_instance=RequestContext(request))
 
 
 @login_required(login_url='/')

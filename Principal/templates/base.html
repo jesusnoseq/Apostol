@@ -10,8 +10,8 @@
 	<!--<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Paytone One">-->
 	<link href="{{ STATIC_URL }}css/bootstrap.min.css" rel="stylesheet">
 	<link href="{{ STATIC_URL }}css/bootstrap-responsive.min.css" rel="stylesheet">	
-	<link href="{{ STATIC_URL }}css/font-awesome.css" rel="stylesheet"><!-- Font Awesome - http://fortawesome.github.com/Font-Awesome -->
-	<link href="{{ STATIC_URL }}css/datepicker.css" rel="stylesheet">
+	<!--<link href="{{ STATIC_URL }}css/font-awesome.css" rel="stylesheet"><!-- Font Awesome - http://fortawesome.github.com/Font-Awesome -->
+	<!--<link href="{{ STATIC_URL }}css/datepicker.css" rel="stylesheet">-->
 	<link href="{{ STATIC_URL }}css/apostol.css" rel="stylesheet">
 	<!--[if lt IE 9]> <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script> <![endif]-->
 	
@@ -20,7 +20,7 @@
 <body>
     <div class="container">
 		{% include "header.html" %}
-		{% load apostol_extras %}
+		{% load principal_extras %}
 		{% getCategorias %}
 		<hr>
 		{% block mensaje %}
