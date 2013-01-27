@@ -58,7 +58,9 @@ def registro(request):
 @login_required(login_url='/registro')
 def perfil(request):
     usuario=Perfil.objects.get(user=request.user)
-    return render_to_response('perfil.html',{'usuario':usuario},
+    participaciones=Participacion.objects.filter(user=request.user)
+    print participaciones
+    return render_to_response('perfil.html',{'usuario':usuario,'participaciones':participaciones},
                               context_instance=RequestContext(request))
 
 def sobre(request):
@@ -135,7 +137,7 @@ def detalle_apuesta(request, id_apuesta):
     #"ratio"
     #calcualteRatios(id_apuesta)
     #-timedelta(hours=1)) < timezone.now() 
-    if apuesta.fecha_fin < timezone.now():
+    if apuesta.fecha_fin < timezone.now() or apuesta.estado=='c':
         mensaje="Apuesta finalizada."
         return render_to_response('apuestaDet.html',{'apuesta':apuesta,
                                                      'ratios':ratios,

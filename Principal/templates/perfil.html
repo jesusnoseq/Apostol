@@ -4,11 +4,14 @@
 <p>
 	<ul>
 		<li>Usuario: {{usuario.user.username}}</li>
-		<li>Nombre: {{usuario.user.first_name}}</li>
+		<!--<li>Nombre: {{usuario.user.first_name}}</li>
 		<li>Telefono: {{usuario.telefono}}</li>
-		<li>Pais: {{usuario.pais}}</li>
+		<li>Pais: {{usuario.pais}}</li>-->
 		<li>Fecha de nacimiento: {{usuario.fecha_nacimiento}}</li>
 		<li>Dinero actual: {{usuario.dinero}}</li>
 	</ul>
 </p>
+<hr/>
+{% include "participacionesList.html" %}	
+
 {% endblock %}

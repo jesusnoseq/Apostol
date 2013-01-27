@@ -88,23 +88,19 @@ class Apuesta(models.Model):
     def ratios(self):
         participaciones=Participacion.objects.filter(apuesta=self)
         n=Participacion.objects.filter(apuesta=self).count()
-        print "Participaciones: "+str(n)
+        #print "Participaciones: "+str(n)
         if n==0:
             return 0
         nOpciones=len(self.getOpciones())
         dineroClasificado=[0]*nOpciones
         for par in participaciones:
-            ###########################################################################################
-            ############## CAMBIAR el 0 del indice por int(par.opcion)
-            ###########################################################################################
             dineroClasificado[par.opcion]+=par.cantidad
-            #print "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee %s" % str(int(par.opcion))
         dineroTotal=0
-        print "Dinero clasificado"
-        print dineroClasificado
+        #print "Dinero clasificado"
+        #print dineroClasificado
         for d in dineroClasificado:
             dineroTotal+=d
-        print "dinero total:"+str(dineroTotal)
+        #print "dinero total:"+str(dineroTotal)
         ratios=[0]*nOpciones
         i=0
         if dineroTotal==0:
@@ -115,8 +111,8 @@ class Apuesta(models.Model):
             else:
                 ratios[i]=100/((d/dineroTotal)*100)
             i+=1
-        print ratios,dineroTotal,n
-        return ratios,dineroTotal,n
+        #print ratios,dineroTotal,n
+        return {'ratios:':ratios,'dinero':dineroTotal,'participantes':n}
 
     def clean(self):
         opcion_ganadora_valid = self.opcion_ganadora
@@ -134,6 +130,9 @@ class Participacion(models.Model):
     opcion = models.SmallIntegerField(null=False)
     class Meta:
         verbose_name_plural='Participaciones'
+    def getVerboseOption(self):
+        return self.apuesta.getOpciones()[self.opcion]
+        #return Apuesta.objects.get(self.apuesta).getOpciones()[self.opcion]
     def __unicode__(self):
         return u"%s apuesta en %s: %ium a la opcion (%s)" % (self.user.username, self.apuesta, self.cantidad,self.opcion)
     """def clean(self):

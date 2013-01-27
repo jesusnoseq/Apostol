@@ -2,22 +2,22 @@
 	{
 	"model": "Principal.Categoria",
 	"pk": 1,
-	"fields": {      "slug": "futbol",      "nombre": "Fútbol",	"imagen":""  	}
+	"fields": {      "slug": "futbol",      "nombre": "Fútbol",	"imagen":"fubol.png"  	}
 	},
 	{
 	"model": "Principal.Categoria",
 	"pk": 2,
-	"fields": {      "slug": "baloncesto",      "nombre": "Baloncesto",	"imagen":""      }
+	"fields": {      "slug": "baloncesto",      "nombre": "Baloncesto",	"imagen":"baloncesto.png"   }
 	},
 	{
 	"model": "Principal.Categoria",
 	"pk": 3,
-	"fields": {      "slug": "F1",      "nombre": "Fórmula 1",	"imagen":""      }
+	"fields": {      "slug": "F1",      "nombre": "Fórmula 1",	"imagen":"F1.png"      }
 	},
 	{
 	"model": "Principal.Categoria",
 	"pk": 4,
-	"fields": {      "slug": "otras",      "nombre": "Sin categoría",	"imagen":""    }
+	"fields": {      "slug": "otras",      "nombre": "Sin categoría",	"imagen":"sinCategorial.png"    }
 	},
 	{
 	"model": "Principal.Perfil",
