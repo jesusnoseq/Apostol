@@ -63,13 +63,10 @@ def perfil(request):
     return render_to_response('perfil.html',{'usuario':usuario,'participaciones':participaciones},
                               context_instance=RequestContext(request))
 
-def sobre(request):
-    return render_to_response('sobre.html',{},
-                              context_instance=RequestContext(request))
 
 def home(request):
-    cats= get_list_or_404(Categoria)
-    apuestas = get_list_or_404(Apuesta, estado='a')
+    cats= Categoria.objects.all()
+    apuestas = Apuesta.objects.filter(estado='a')
     entrar(request)
     return render_to_response('index.html',{'apuestas':apuestas},context_instance=RequestContext(request))
 
@@ -85,8 +82,10 @@ def nuevaApuesta(request):
     formulario=ApuestaForm(request.POST,request.FILES)
     
     if formulario.is_valid():
-        formulario.cleaned_data["usuario"] = request.user
-        apuesta=formulario.save()
+        apuesta=formulario.save(commit=False)
+        #formulario.cleaned_data["usuario"] = request.user
+        apuesta.user=request.user
+        apuesta.save()
         return render_to_response('mensaje.html',{'mensaje':'Apuesta creada'},context_instance=RequestContext(request))
         
     return render_to_response('categoriaForm.html',{'formulario':formulario}, context_instance=RequestContext(request))

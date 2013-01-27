@@ -6,24 +6,23 @@
 			<h3>{{participacion.apuesta.categoria}} - {{ participacion.apuesta.titulo }}</h3>
 			<div class="pull-right"><a class="btnA" href="{{ participacion.apuesta.get_absolute_url }}">Ver</a></div>
 		</header>
-		<div class="row">
-			<section class="span4">Apostados {{participacion.cantidad}} um a la opción ({{participacion.opcion}}) {{participacion.getVerboseOption}}</setion>
-			{% if participacion.apuesta.estado == "c" %}
-				Opcion ganadora {{participacion.apuesta.opcion_ganadora}}
-				{% if participacion.apuesta.opcion_ganadora == participacion.opcion %}
-					Apuesta ganada!	
+			<section>
+				<p>Apostados {{participacion.cantidad}} um a la opción ({{participacion.opcion}}) {{participacion.getVerboseOption}}</p>
+				<p>
+				{% if participacion.apuesta.estado == "c" %}
+					Opcion ganadora: ({{participacion.apuesta.opcion_ganadora}}) {{participacion.apuesta.getVerboseWinOption}}
+					{% if participacion.apuesta.opcion_ganadora == participacion.opcion %}
+						<br/><strong>Apuesta ganada!</strong> 	
+					{% endif %}
+				{% else %}
+					Abierta hasta el {{participacion.apuesta.fecha_fin}}
 				{% endif %}
-			{% endif %}
+				</p>
+				<p>ratios {{participacion.apuesta.ratios}}</p>
+				|floatformat:3
+			</setion>
 			<!--<img class="imgCategoria span3" src="{{ MEDIA_URL }}{{apuesta.categoria.imagen}}" alt="{{apuesta.categoria}}"/>-->
 			<!--<div class="catboxbg" style="background: url({{ MEDIA_URL }}{{a.categoria.imagen}}) no-repeat"> </div>-->
-			<section class="span4">
-				<p>categoria </p>
-				<p>categoria img {{participacion.apuesta.categoria.imagen}}</p>
-				<p>opciones {{participacion.apuesta.opciones}}</p>
-				<p>ratios {{participacion.apuesta.ratios|floatformat:3}}</p>
-				<p>Abierta hasta el {{participacion.apuesta.fecha_fin}}</p>
-			</section>
-		</div>
 	</article>
 </li>
 {% empty %}

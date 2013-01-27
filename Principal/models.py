@@ -83,6 +83,8 @@ class Apuesta(models.Model):
         return "/apuesta/%i/%s" % (self.id, defaultfilters.slugify(self.titulo))
     def getOpciones(self):
         return [i.strip() for i in self.opciones.split(',')]
+    def getVerboseWinOption(self):
+        return self.getOpciones()[self.opcion_ganadora]
     def getNParticipantes(self):
         return Participacion.objects.filter(apuesta=self).count()
     def ratios(self):
