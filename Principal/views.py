@@ -84,11 +84,10 @@ def detalleApuesta(request, id_apuesta):
     now=timezone.now() 
     mensaje=""
     apuesta= get_object_or_404(Apuesta, pk=id_apuesta)
-    #ratios, dinero, participaciones= 
+
     participaciones=Participacion.objects.filter(apuesta=apuesta).filter(user=request.user)
     ratios=apuesta.ratios()
-    #"ratio"
-    #calcualteRatios(id_apuesta)
+
     #-timedelta(hours=1)) < timezone.now() 
 
     if apuesta.fecha_fin < timezone.now() or apuesta.estado=='c':
@@ -168,7 +167,7 @@ def fijarGanador(request,id_apuesta,opcion):
     mensaje=""
     apuesta = get_object_or_404(Apuesta,pk=id_apuesta)
     apuesta.opcion_ganadora=opcion
-    #apuesta.estado='c'
+    apuesta.estado='c'
     apuesta.save()
     ratios=apuesta.ratios()
     

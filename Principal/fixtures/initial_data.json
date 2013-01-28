@@ -41,6 +41,11 @@
 	{
 	"model": "Principal.Apuesta",
 	"pk": 2,
-	"fields": {"titulo": "Prueba", "opciones": "F.Alonso, L.Hamilton, J.Button, F.Massa", "descripcion":"¿Quien ganara la F1?","user":1, "categoria":3,  "fecha_inicio":"2013-01-01T13:20:30+03:00","fecha_fin":"2013-02-10T13:20:30+03:00","estado":"a","visibilidad":"pu"}
+	"fields": {"titulo": "¿Quién ganará el mudial de F1?", "opciones": "F.Alonso, L.Hamilton, J.Button, F.Massa", "descripcion":"¿Quien ganara la F1?","user":1, "categoria":3,  "fecha_inicio":"2013-01-01T13:20:30+03:00","fecha_fin":"2013-02-10T13:20:30+03:00","estado":"a","visibilidad":"pu"}
+	},
+	{
+	"model": "Principal.Apuesta",
+	"pk": 3,
+	"fields": {"titulo": "¿Lloverá en semana santa?", "opciones": "Si, No", "descripcion":"¿Que pasará entonces?","user":1, "categoria":4,  "fecha_inicio":"2013-01-01T13:20:30+03:00","fecha_fin":"2013-04-01T00:00:00+02:00","estado":"a","visibilidad":"pu"}
 	}
 ]

@@ -81,6 +81,7 @@ a h1{
 	text-decoration:none;
 	text-shadow:1px 1px 0 #FFF033;
 	vertical-align: middle;
+	margin: 1px;
 }
 
 a.btnA:hover{

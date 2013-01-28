@@ -85,9 +85,10 @@ class Apuesta(models.Model):
         participaciones=Participacion.objects.filter(apuesta=self)
         n=Participacion.objects.filter(apuesta=self).count()
         #print "Participaciones: "+str(n)
-        if n==0:
-            return 0
         nOpciones=len(self.getOpciones())
+        if n==0:
+            return [0]*nOpciones
+        
         dineroClasificado=[0]*nOpciones
         for par in participaciones:
             dineroClasificado[par.opcion]+=par.cantidad
@@ -100,7 +101,7 @@ class Apuesta(models.Model):
         ratios=[0]*nOpciones
         i=0
         if dineroTotal==0:
-            return 0
+            return [0]*nOpciones
         for d in dineroClasificado:
             if d==0:
                 ratios[i]='0'
