@@ -1,9 +1,8 @@
-	  <form class="loginBox" method="post" action="">
+	  <form class="loginBox" method="post" action="/">
 	  	{% csrf_token %}
 	    <h2>Iniciar sesión</h2>
 	    <input required="" type="text" name="username" class="input-block-level" placeholder="Username">
 	    <input required="" type="password" name="password"  class="input-block-level" placeholder="Password">
 	    <button class="btnA" type="submit">Login</button>
-	    
 	   	<a class="btnA"  href="/registro">Registrarse</a>
 	  </form>

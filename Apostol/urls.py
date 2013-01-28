@@ -18,17 +18,18 @@ urlpatterns = patterns('',
     url(r'^logout/$','Principal.views.salir'),
     url(r'^registro/$','Principal.views.registro'),
     url(r'^perfil/$','Principal.views.perfil'),
-    
- 
 
     url(r'^apuesta/nueva/$','Principal.views.nuevaApuesta'),
-    url(r'^apuestas/','Principal.views.apuestas'), #apuestas en las que participo
-    url(r'^apuesta/(?P<id_apuesta>\d+)\/[-\w]*$','Principal.views.detalle_apuesta'),
+    url(r'^apuesta/(?P<id_apuesta>\d+)\/[-\w]*$','Principal.views.detalleApuesta'),
+    
+    url(r'^apuestas/admin/$','Principal.views.apuestasAdmin'),
+    url(r'^apuestas/admin/borra/(?P<id_apuesta>\d+)\/[-\w]*$','Principal.views.borraApuesta'),
+    url(r'^apuestas/admin/gana/(?P<id_apuesta>\d+)/(?P<opcion>\d+)/$','Principal.views.fijarGanador'),
+    
     
     url(r'^categoria/nueva/$','Principal.views.nuevaCategoria'),
     url(r'^categoria/(?P<cat>\w{1,50})/$','Principal.views.apuestasCat'), #por categoria
-    
-    #url(r'^apuesta/(?P<id_apuesta>\d+)$','Principal.views.detalle_apuesta'),
+
     
     url(r'^anotaciones/$', direct_to_template, {'template': 'anotaciones.html'}),
     url(r'^about/$', direct_to_template, {'template': 'sobre.html'}),

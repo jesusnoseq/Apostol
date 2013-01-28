@@ -12,7 +12,7 @@
 				{% if participacion.apuesta.estado == "c" %}
 					Opcion ganadora: ({{participacion.apuesta.opcion_ganadora}}) {{participacion.apuesta.getVerboseWinOption}}
 					{% if participacion.apuesta.opcion_ganadora == participacion.opcion %}
-						<br/><strong>Apuesta ganada!</strong> 	
+						<br/><strong>Apuesta ganada!</strong>
 					{% endif %}
 				{% else %}
 					Abierta hasta el {{participacion.apuesta.fecha_fin}}

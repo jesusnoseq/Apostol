@@ -13,7 +13,33 @@ from Principal.models import *
 class CategoriaForm(ModelForm):
     class Meta:
         model=Categoria
-        
+
+class ApuestaForm(ModelForm):
+    #opciones = forms.CharField(widget=forms.Textarea,help_text="Pon las distintas opciones de la apuesta separadas por comas.")
+    #widgets = {'fecha_fin ': forms.SplitDateTimeField()}
+    
+    
+    def clean_fecha_fin(self):
+        fecha_fin_valid = self.cleaned_data['fecha_fin']
+        if (fecha_fin_valid-timedelta(hours=1)) < timezone.now() :
+            raise forms.ValidationError("La apuesta debe tener al menos una hora de duracion.")
+        return fecha_fin_valid
+
+    """def clean_fecha_fin(self):
+        fecha_fin_valid = self.cleaned_data['fecha_fin']
+        if (fecha_fin_valid-timedelta(hours=1)) < timezone.now() :
+            raise forms.ValidationError("La apuesta debe tener al menos una hora de duracion.")
+        return fecha_fin_valid"""
+
+    class Meta:
+        model=Apuesta
+        exclude=('user','fecha_inicio','estado','visibilidad','opcion_ganadora')
+        widgets = {
+            'fecha_fin': forms.SplitDateTimeWidget(),
+            'opciones': forms.Textarea()
+        }
+
+""" 
 class ApuestaForm(forms.Form):
     titulo = forms.CharField(max_length=250)
     categoria = forms.ModelChoiceField(queryset=Categoria.objects.all(), empty_label=None)
@@ -42,6 +68,7 @@ class ApuestaForm(forms.Form):
             raise forms.ValidationError("La apuesta debe tener al menos una hora de duracion.")
    
         return fecha_fin_valid
+"""
 
 class usuarioForm(UserCreationForm):#forms.Form):
     fecha_nacimiento = forms.DateField(widget=forms.DateInput(attrs= {'class':'datepicker'}))
@@ -70,13 +97,12 @@ class ParticipacionForm(ModelForm):
         cantidad = self.cleaned_data['cantidad']
         us=self.user
         usuario=Perfil.objects.get(user=us)
-        
         if cantidad>usuario.dinero:
             raise forms.ValidationError("¡No tienes suficiente dinero!")
         if cantidad<=0:
             raise forms.ValidationError("Tienes que apostar una cantidad positiva de dinero.")
         return cantidad
-    
+
     def clean_opcion(self):
         opcion = self.cleaned_data['opcion']
         nops=len(self.apuesta.getOpciones())

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block titulo %}Administrador de apuestas{% endblock %}
+{% block mainContent %}
+
+<div>
+	<h2>Apuestas esperando resolucion</h2>
+<ul>
+{% for apuesta in apuestas %}
+<li>
+	<article>
+		<header>	
+			<h3>{{ apuesta.titulo }}</h3>
+		</header>
+		<div class="row">
+			<section class="span4">
+				<p>categoria {{apuesta.categoria}}</p>
+				<p>categoria img {{apuesta.categoria.imagen}}</p>
+				<p>opciones {{apuesta.opciones}}</p>
+				<p>ratios {{apuesta.ratios|floatformat:3}}</p>
+				<p>Abierta hasta el {{apuesta.fecha_fin}}</p>
+			</section>
+			<section class="span5">
+				<h4>Elige opción ganadora:</h4>
+				{% for opt in apuesta.getOpciones %}
+				<a class="btnA" href="gana/{{apuesta.id}}/{{forloop.counter0 }}">({{forloop.counter0}}) {{opt}}</a>
+				{% endfor %}
+			</section>
+			<div class="span2"><a class="btnA" href="borra/{{apuesta.id}}">Borrar</a></div>
+		</div>
+	</article>
+</li>
+{% empty %}
+	<li>No hay apuestas en este momento.</li>
+{% endfor %}
+</ul>
+
+</div>
+{% endblock%}

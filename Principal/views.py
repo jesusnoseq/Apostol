@@ -14,9 +14,12 @@ from django.core.urlresolvers import reverse
 from django.forms import ValidationError
 from django.utils import timezone
 from datetime import datetime, date, timedelta
+from django.contrib.admin.views.decorators import staff_member_required
 
-from Principal.models import *
+from Principal.models import Categoria, Apuesta, Participacion, Perfil
 from Principal.forms import *
+from django.contrib.admin.views.decorators import staff_member_required
+from django.views.generic.simple import redirect_to
 
 
 # Create your views here.
@@ -70,6 +73,52 @@ def home(request):
     entrar(request)
     return render_to_response('index.html',{'apuestas':apuestas},context_instance=RequestContext(request))
 
+def apuestasCat(request,cat):
+    categoria=Categoria.objects.get(slug=cat)
+    apuestas = Apuesta.objects.filter(estado='a', categoria=categoria)#get_list_or_404(Apuesta, estado='a', categoria=categoria)
+    return render_to_response('apuestas.html',{'apuestas':apuestas}, context_instance=RequestContext(request))
+
+
+@login_required(login_url='/registro')
+def detalleApuesta(request, id_apuesta):
+    mensaje=""
+    apuesta= get_object_or_404(Apuesta, pk=id_apuesta)
+    #ratios, dinero, participaciones= 
+    participaciones=Participacion.objects.filter(apuesta=apuesta).filter(user=request.user)
+    ratios=apuesta.ratios()
+    #"ratio"
+    #calcualteRatios(id_apuesta)
+    #-timedelta(hours=1)) < timezone.now() 
+
+    if apuesta.fecha_fin < timezone.now() or apuesta.estado=='c':
+        mensaje="Apuesta finalizada."
+        return render_to_response('apuestaDet.html',{'apuesta':apuesta,
+                                                     'ratios':ratios,
+                                                     'mensaje':mensaje,
+                                                     'participaciones':participaciones},context_instance=RequestContext(request))
+    form=ParticipacionForm(request.POST)
+    form.user=request.user
+    form.apuesta=apuesta
+    if form.is_valid():
+        participacion = form.save(commit=False)
+        user=Perfil.objects.get(user=request.user)
+        participacion.user=request.user
+        participacion.apuesta=apuesta
+        participacion.save()
+        user.dinero-=participacion.cantidad
+        user.save()
+        mensaje="Apuesta realizada"
+
+    return render_to_response('apuestaDet.html',{'apuesta':apuesta,
+                                                 'ratios':ratios,
+                                                 'mensaje':mensaje,
+                                                 'formulario':form,
+                                                 'participaciones':participaciones},
+                              context_instance=RequestContext(request))
+
+
+
+@staff_member_required
 def nuevaCategoria(request):
     formulario=CategoriaForm(request.POST)
     if formulario.is_valid():
@@ -78,6 +127,7 @@ def nuevaCategoria(request):
         
     return render_to_response('categoriaForm.html',{'formulario':formulario}, context_instance=RequestContext(request))
 
+@staff_member_required
 def nuevaApuesta(request):
     formulario=ApuestaForm(request.POST,request.FILES)
     
@@ -91,21 +141,13 @@ def nuevaApuesta(request):
     return render_to_response('categoriaForm.html',{'formulario':formulario}, context_instance=RequestContext(request))
 
 
-def apuestas(request):
+
+@staff_member_required
+def apuestasAdmin(request):
     apuestas = Apuesta.objects.filter(estado='a')
-    return render_to_response('apuestas.html',{'apuestas':apuestas}, context_instance=RequestContext(request))
+    return render_to_response('apuestasAdmin.html',{'apuestas':apuestas}, context_instance=RequestContext(request))
 
-def apuestasCat(request,cat):
-    categoria=Categoria.objects.get(slug=cat)
-    apuestas = Apuesta.objects.filter(estado='a', categoria=categoria)#get_list_or_404(Apuesta, estado='a', categoria=categoria)
-    return render_to_response('apuestas.html',{'apuestas':apuestas}, context_instance=RequestContext(request))
-
-
-def apuestasUser(request):
-    apuestas = Apuesta.objects.filter(user=request.user)
-    return render_to_response('apuestas.html',{'apuestas':apuestas}, context_instance=RequestContext(request))
-
-
+@staff_member_required
 def borraApuesta(request,id_apuesta):
     apuesta=get_object_or_404(Apuesta,pk=id_apuesta)
     participaciones=Participacion.objects.filter(apuesta=apuesta)
@@ -116,50 +158,32 @@ def borraApuesta(request,id_apuesta):
         p.delete()
     mensaje="Apuesta borrada."
     apuesta.delete()
+    return render_to_response('mensaje.html',{'mensaje':mensaje},context_instance=RequestContext(request))
 
-    return HttpResponseRedirect('/')
-
+@staff_member_required
 def fijarGanador(request,id_apuesta,opcion):
-    #repartir pasta
-    apuestas = get_list_or_404(Apuesta, estado='a')
-    return render_to_response('apuestas.html',{'apuestas':apuestas}, context_instance=RequestContext(request))
-
-
-@login_required(login_url='/registro')
-def detalle_apuesta(request, id_apuesta):
-    mensaje =""
-    apuesta= get_object_or_404(Apuesta, pk=id_apuesta)
-    #ratios, dinero, participaciones= 
-    print apuesta.getOpciones()
-    participaciones=Participacion.objects.filter(apuesta=apuesta).filter(user=request.user)
+    mensaje=""
+    apuesta = get_object_or_404(Apuesta,pk=id_apuesta)
+    apuesta.opcion_ganadora=opcion
+    apuesta.save()
     ratios=apuesta.ratios()
-    #"ratio"
-    #calcualteRatios(id_apuesta)
-    #-timedelta(hours=1)) < timezone.now() 
-    if apuesta.fecha_fin < timezone.now() or apuesta.estado=='c':
-        mensaje="Apuesta finalizada."
-        return render_to_response('apuestaDet.html',{'apuesta':apuesta,
-                                                     'ratios':ratios,
-                                                     'mensaje':mensaje,
-                                                     'participaciones':participaciones},context_instance=RequestContext(request))
-    form=ParticipacionForm(request.POST)
-    form.user=request.user
-    form.apuesta=apuesta
-    if form.is_valid():
-        participacion = form.save(commit=False)
-        participacion.user=request.user
-        participacion.apuesta=apuesta
-        participacion.save()
-        user=Perfil.objects.get(user=request.user)
-        user.dinero-=participacion.cantidad
-        user.save()
-        mensaje="Apuesta realizada"
+    """multiplicador=ratios["ratios"][opcion]
+    if Participacion.objects.filter(opcion=opcion).filter(apuesta=apuesta).count()==0:
+        mensaje="Opcion ganadora registrada. No hay ningun ganador."
+    else:
+        participaciones=Participacion.objects.filter(opcion=opcion).filter(apuesta=apuesta)
+        for participante in participaciones:
+            user=Perfil.objects.get(participante.user)
+            user.dinero+=participante.cantidad*multiplicador
+            user.save()    
+        mensaje="Opcion ganadora registrada. El dinero ha sido repartido entre los ganadores."
+    return render_to_response('mensaje.html',{'mensaje':mensaje},context_instance=RequestContext(request))"""
 
-    return render_to_response('apuestaDet.html',{'apuesta':apuesta,
-                                                 'ratios':ratios,
-                                                 'mensaje':mensaje,
-                                                 'formulario':form,
-                                                 'participaciones':participaciones},context_instance=RequestContext(request))
+    
+    
+    
+    
+    
     #return render_to_response('apuestaDet.html',{'apuesta':apuesta,
     #                                             'ratios':ratios,
     #                                             'mensaje':mensaje,
