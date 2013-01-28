@@ -1,3 +1,4 @@
+{% load principal_extras %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -20,7 +21,7 @@
 <body>
     <div class="container">
 		{% include "header.html" %}
-		{% load principal_extras %}
+
 		{% getCategorias %}
 		<hr>
 		{% block mensaje %}
@@ -42,7 +43,7 @@
     </div> <!-- /container -->
 	<script src="{{ STATIC_URL }}js/jquery-latest.js"></script>
 	<script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
-	<script src="{{ STATIC_URL }}js/bootstrap-datepicker.js"></script>
+	<!--<script src="{{ STATIC_URL }}js/bootstrap-datepicker.js"></script>-->
 	{% block footerScripts %}
 	{% endblock %}
 </body>

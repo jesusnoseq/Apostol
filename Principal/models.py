@@ -34,7 +34,6 @@ class Categoria(models.Model):
     nombre = models.CharField(max_length=250,unique=True)
     imagen = models.ImageField(upload_to='imgCategoria',blank=True)
     #subcategoria = models.ForeignKey(Categoria, blank=True)
-    #@permalink
     def get_absolute_url(self):
         return "/categoria/%s/" % self.slug
     def __unicode__(self):
@@ -80,8 +79,8 @@ class Apuesta(models.Model):
         return [i.strip() for i in self.opciones.split(',')]
     def getVerboseWinOption(self):
         return self.getOpciones()[self.opcion_ganadora]
-    def getNParticipantes(self):
-        return Participacion.objects.filter(apuesta=self).count()
+    def getNparticipantes(self):
+        return Participacion.objects.filter(apuesta=self).count();
     def ratios(self):
         participaciones=Participacion.objects.filter(apuesta=self)
         n=Participacion.objects.filter(apuesta=self).count()
@@ -104,12 +103,17 @@ class Apuesta(models.Model):
             return 0
         for d in dineroClasificado:
             if d==0:
-                ratios[i]='No hay participantes'
+                ratios[i]='0'
             else:
                 ratios[i]=100/((d/dineroTotal)*100)
             i+=1
         #print ratios,dineroTotal,n
-        return {'ratios:':ratios,'dinero':dineroTotal,'participantes':n}
+        return ratios
+    def optionsWithRatios(self):
+        pack=zip(self.getOpciones(), self.ratios())
+        return pack
+        
+        
 
     def clean(self):
         if len(self.getOpciones())<2:

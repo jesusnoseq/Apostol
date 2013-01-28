@@ -81,6 +81,7 @@ def apuestasCat(request,cat):
 
 @login_required(login_url='/registro')
 def detalleApuesta(request, id_apuesta):
+    now=timezone.now() 
     mensaje=""
     apuesta= get_object_or_404(Apuesta, pk=id_apuesta)
     #ratios, dinero, participaciones= 
@@ -95,6 +96,7 @@ def detalleApuesta(request, id_apuesta):
         return render_to_response('apuestaDet.html',{'apuesta':apuesta,
                                                      'ratios':ratios,
                                                      'mensaje':mensaje,
+                                                     'now':now,
                                                      'participaciones':participaciones},context_instance=RequestContext(request))
     form=ParticipacionForm(request.POST)
     form.user=request.user
@@ -145,7 +147,8 @@ def nuevaApuesta(request):
 @staff_member_required
 def apuestasAdmin(request):
     apuestas = Apuesta.objects.filter(estado='a')
-    return render_to_response('apuestasAdmin.html',{'apuestas':apuestas}, context_instance=RequestContext(request))
+    now=timezone.now() 
+    return render_to_response('apuestasAdmin.html',{'apuestas':apuestas,'now':now}, context_instance=RequestContext(request))
 
 @staff_member_required
 def borraApuesta(request,id_apuesta):
@@ -165,8 +168,10 @@ def fijarGanador(request,id_apuesta,opcion):
     mensaje=""
     apuesta = get_object_or_404(Apuesta,pk=id_apuesta)
     apuesta.opcion_ganadora=opcion
+    #apuesta.estado='c'
     apuesta.save()
     ratios=apuesta.ratios()
+    
     """multiplicador=ratios["ratios"][opcion]
     if Participacion.objects.filter(opcion=opcion).filter(apuesta=apuesta).count()==0:
         mensaje="Opcion ganadora registrada. No hay ningun ganador."
@@ -176,8 +181,9 @@ def fijarGanador(request,id_apuesta,opcion):
             user=Perfil.objects.get(participante.user)
             user.dinero+=participante.cantidad*multiplicador
             user.save()    
-        mensaje="Opcion ganadora registrada. El dinero ha sido repartido entre los ganadores."
-    return render_to_response('mensaje.html',{'mensaje':mensaje},context_instance=RequestContext(request))"""
+        mensaje="Opcion ganadora registrada. El dinero ha sido repartido entre los ganadores.
+    """
+    return render_to_response('mensaje.html',{'mensaje':mensaje},context_instance=RequestContext(request))
 
     
     

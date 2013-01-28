@@ -18,8 +18,10 @@
 					Abierta hasta el {{participacion.apuesta.fecha_fin}}
 				{% endif %}
 				</p>
-				<p>ratios {{participacion.apuesta.ratios}}</p>
-				|floatformat:3
+				{% for opt in participacion.apuesta.optionsWithRatios %}
+					<a class="btnA btnA-small">({{forloop.counter}}) {{opt.0}} [{{opt.1|floatformat:2}}] </a>
+				{% endfor %}
+				
 			</setion>
 			<!--<img class="imgCategoria span3" src="{{ MEDIA_URL }}{{apuesta.categoria.imagen}}" alt="{{apuesta.categoria}}"/>-->
 			<!--<div class="catboxbg" style="background: url({{ MEDIA_URL }}{{a.categoria.imagen}}) no-repeat"> </div>-->

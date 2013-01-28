@@ -1,38 +1,64 @@
 {% extends "base.html" %}
 {% block titulo %}Apuesta - {{apuesta}}{% endblock %}
 {% block mainContent %}
+<article class="container">
+	<header class="cotentHeader">
+		<h2>{{ apuesta.titulo }}</h2>
+		<p>{{apuesta.descripcion}}</p>
+	</header>
+	<div class="infoBox">
+		<div class="span4 BorderBox">
+			<p class="hwcenter">Abierta hasta el {{apuesta.fecha_fin}}.</p>
+			<p class="hwcenter">{{apuesta.getNparticipantes}} Participantes.</p>
+		</div>
+		<div>
+			<img class="imgCategoria" src="{{ MEDIA_URL }}imgCategoria/{{apuesta.categoria.imagen}}" alt="{{apuesta.categoria}}"/>
+		</div>
+	</div>
+	<div class="BorderBox">
+		{% if formulario %}
+			{{ formulario.non_field_errors }}
+			<form class="" method="post" action="">
+				<fieldset><legend>Participar</legend>
+				{% csrf_token %}		
+				<label>Opción:</label>
+				<div id="opciones">
+				{{ formulario.opcion.errors }}
+				{% for opt in apuesta.optionsWithRatios %}
+					<a class="btnA btnA-small unselected" href="#" id="opt-{{forloop.counter0}}">({{forloop.counter}}) {{opt.0}} [{{opt.1|floatformat:2}}] </a>
+				{% endfor %}
+				<input type="hidden" id="id_opcion" name="opcion">
+				</div>
+				
+				<label for="id_cantidad">Cantidad:</label>
+				{{ formulario.cantidad.errors }}
+				<input type="text" id="id_cantidad" name="cantidad">
 
-    {{apuesta.titulo }}
-    {{apuesta.opciones }}
-    {{apuesta.descripcion  }}
-    {{apuesta.user }}
-   {{ apuesta.categoria }}
-   {{ apuesta.fecha_inicio }}
-   {{ apuesta.fecha_fin }}
-   {{ apuesta.estado }}
-  {{  apuesta.visibilidad }}
-  {{  apuesta.tipo }}
+				<hr/>
+				<input class="btnA" type="submit" value="Apostar" />
+				</fieldset>
+			</form>
+		{% endif %}
+	</div>
+</article>
+{% endblock %}
+{% block footerScripts %}
+<script>
+	$(document).ready(function(){
+		$('#opciones a').click(seleccionaOpcion);
+		var opt=$('#id_opcion').val()
+		if(opt!=""){
+			$("#opt-"+opt).removeClass('unselected');
+		}
+	});
+	
+	function seleccionaOpcion(event){
+		event.preventDefault()
+		var opt=$(this).attr('id').split('-')[1];
+		$('#opciones a').addClass('unselected');
+		$(this).removeClass('unselected');
+		$('#id_opcion').val(opt);
+	}
+</script>
 
-{{ratios}}
-	<article>
-		<header>	
-			<h2>{{ apuesta.titulo }}</h2>
-		</header>
-		<section>
-			<p>opciones {{apuesta.opciones}}</p>
-			<p>ratios {{apuesta.ratios}}</p>|floatformat:3
-		</section>
-		<section>Abierta hasta {{apuesta.fecha_fin}}</section>
-		<img class="imgCategoria" src="{{ MEDIA_URL }}{{a.categoria.imagen}}" alt="{{a.categoria}}"/>
-		<div class="catboxbg" style="background: url({{ MEDIA_URL }}{{a.categoria.imagen}}) no-repeat"> </div>
-	</article>
-
-
-{% if formulario %}
-<form class="" method="post" action="">
-	{% csrf_token %}
-	<div>{{formulario}}</div>
-	<input class="btn btn-primary" type="submit" value="Apostar" />
-</form>
-{% endif %}
 {% endblock %}

@@ -142,15 +142,35 @@ a.btnA:hover{
 }
 .mainList li{
 	border-bottom:1px dotted #C3C3C3;
+	background:#FFE;
 	padding: 20px;
+	padding-top: 5px;
 }
+
+.hwcenter{
+	padding: 5px;
+	vertical-align: baseline;
+	text-align: center;
+}
+
+.subtitleElem{
+	color: #555;
+	font-size: 0.9em;
+}
+.titleElem{
+	/*text-decoration: underline;*/
+	border-bottom: 2px #666 solid;
+	padding:0 5px;
+}
+
 
 .BorderBox{
-	background-color: #EEEEEE;
+	background-color: #EEE;
 	border: 1px solid #E5E5E5;
 	display: block;
+	padding: 5px;
+	margin: 5px;
 }
-
 
 .userMenu{
 	list-style: none;
@@ -162,3 +182,28 @@ a.btnA:hover{
 		margin: 5px;
 }
 
+.cotentHeader{
+	margin: 5px;
+}
+.imgCategoria{
+	margin: 5px;
+	padding: 5px;
+	border: 1px #EEE solid;
+	height: 80px;
+}
+
+.infoBox{
+	margin-bottom: 20px;
+}
+
+#opciones{
+	margin: 20px;
+}
+
+
+.unselected{
+	font-weight: bold;
+	background: #666;
+	box-shadow: 0;
+	text-shadow: 0 0 0;
+}

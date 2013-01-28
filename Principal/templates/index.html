@@ -6,6 +6,16 @@
   
 	<p>Casa de apuestas online hecha con Django, jQuery y Twitter Bootstrap.</p>
 
+	<h2>Notas para la correción</h2>
+	<ul>
+		<li>Usuario administrador inicial: admin | password: password</li>
+		<li>Usuario inicial: user1 | password: password</li>
+		<li>Al sincronizar la base de datos se crea el perfil para el admin en la aplicación y el usuario user1 ademas de algun ejemplo de apuesta.</li>
+		<li>Los usuarios normales no pueden crear apuestas.</li>
+		<li>Después de crear una apuesta hay que indicar que opción es la ganadora desde la administración de apuestas (botón "Administrar apuestas").</li>
+		<li>En el menú de administracion de apuestas solo se muestran las apuestas pendientes de indicar la opción ganadora.</li>
+		<li>Se puede indicar la opción ganadora antes de acabar la apuesta, en ese caso la apuesta acaba inmediatamente.</li>
+  	</ul>
   {% if not user.is_authenticated %}
   <p><a class="btnA btnA-large" href="/registro/">Registrarse</a></p>
   {% endif %}

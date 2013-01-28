@@ -1,21 +1,24 @@
 <ul class="mainList">
 {% for apuesta in apuestas %}
 <li>
-	<article>
-		<header>	
-			<h2>{{ apuesta.titulo }}</h2>
-			<div class="pull-right"><a class="btnA" href="{{ apuesta.get_absolute_url }}">Participar</a></div>
+		<header class="row">
+			<h3><span class="titleElem">{{ apuesta.titulo }}</span></h3>
 		</header>
 		<div class="row">
-			<!--<img class="imgCategoria span3" src="{{ MEDIA_URL }}{{apuesta.categoria.imagen}}" alt="{{apuesta.categoria}}"/>-->
-			<!--<div class="catboxbg" style="background: url({{ MEDIA_URL }}{{a.categoria.imagen}}) no-repeat"> </div>-->
-			<section class="span4">
-				<p>categoria {{apuesta.categoria}}</p>
-				<p>categoria img {{apuesta.categoria.imagen}}</p>
-				<p>opciones {{apuesta.opciones}}</p>
-				<p>ratios {{apuesta.ratios|floatformat:3}}</p>
-				<p>Abierta hasta el {{apuesta.fecha_fin}}</p>
-			</section>
+			<div class="span4 BorderBox">
+				<p class="hwcenter">Abierta hasta el {{apuesta.fecha_fin}}.</p>
+				<p class="hwcenter">{{apuesta.getNparticipantes}} Participantes.</p>
+			</div>
+			<div class="span4 opciones">
+				<h4>Opciones:</h4>
+				{% for opt in apuesta.getOpciones %}
+					<span class="BorderBox pull-left" >({{forloop.counter}}) {{opt}}</span>
+				{% endfor %}
+			</div>
+			<div class="span2">
+				<img class="imgCategoria" src="{{ MEDIA_URL }}imgCategoria/{{apuesta.categoria.imagen}}" alt="{{apuesta.categoria}}"/>
+			</div>
+			<div class="span1"><a class="btnA" href="{{ apuesta.get_absolute_url }}">Participar</a></div>
 		</div>
 	</article>
 </li>
