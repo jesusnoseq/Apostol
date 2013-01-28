@@ -16,7 +16,7 @@
 				{% endfor %}
 			</div>
 			<div class="span2">
-				<img class="imgCategoria" src="{{ MEDIA_URL }}imgCategoria/{{apuesta.categoria.imagen}}" alt="{{apuesta.categoria}}"/>
+				<img class="imgCategoria" src="{{ MEDIA_URL }}{{apuesta.categoria.imagen}}" alt="{{apuesta.categoria}}"/>
 			</div>
 			<div class="span1"><a class="btnA" href="{{ apuesta.get_absolute_url }}">Participar</a></div>
 		</div>

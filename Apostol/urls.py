@@ -22,6 +22,7 @@ urlpatterns = patterns('',
     url(r'^apuesta/nueva/$','Principal.views.nuevaApuesta'),
     url(r'^apuesta/(?P<id_apuesta>\d+)\/[-\w]*$','Principal.views.detalleApuesta'),
     
+    url(r'^user/admin/dinero/$','Principal.views.agregaDinero'),
     url(r'^apuestas/admin/$','Principal.views.apuestasAdmin'),
     url(r'^apuestas/admin/borra/(?P<id_apuesta>\d+)\/[-\w]*$','Principal.views.borraApuesta'),
     url(r'^apuestas/admin/gana/(?P<id_apuesta>\d+)/(?P<opcion>\d+)/$','Principal.views.fijarGanador'),

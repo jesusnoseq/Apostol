@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block titulo %}Introducir dinero{% endblock %}
+{% block mainContent %}
+<form class="" method="post" action="">
+	{% csrf_token %}
+	<div>{{formulario}}</div>
+	<input class="btnA" type="submit" value="Introducir" />
+</form>
+{% endblock %}

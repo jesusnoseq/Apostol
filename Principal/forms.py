@@ -15,9 +15,6 @@ class CategoriaForm(ModelForm):
         model=Categoria
 
 class ApuestaForm(ModelForm):
-    #opciones = forms.CharField(widget=forms.Textarea,help_text="Pon las distintas opciones de la apuesta separadas por comas.")
-    #widgets = {'fecha_fin ': forms.SplitDateTimeField()}
-    
     
     def clean_fecha_fin(self):
         fecha_fin_valid = self.cleaned_data['fecha_fin']
@@ -25,51 +22,15 @@ class ApuestaForm(ModelForm):
             raise forms.ValidationError("La apuesta debe tener al menos una hora de duracion.")
         return fecha_fin_valid
 
-    """def clean_fecha_fin(self):
-        fecha_fin_valid = self.cleaned_data['fecha_fin']
-        if (fecha_fin_valid-timedelta(hours=1)) < timezone.now() :
-            raise forms.ValidationError("La apuesta debe tener al menos una hora de duracion.")
-        return fecha_fin_valid"""
 
     class Meta:
         model=Apuesta
         exclude=('user','fecha_inicio','estado','visibilidad','opcion_ganadora')
         widgets = {
             'fecha_fin': forms.SplitDateTimeWidget(),
-            'opciones': forms.Textarea()
+            'opciones': forms.Textarea(attrs={'title': "Pon las distintas opciones de la apuesta separadas por comas.",})
         }
-
-""" 
-class ApuestaForm(forms.Form):
-    titulo = forms.CharField(max_length=250)
-    categoria = forms.ModelChoiceField(queryset=Categoria.objects.all(), empty_label=None)
-    opciones = forms.CharField(widget=forms.Textarea,help_text="Pon las distintas opciones de la apuesta separadas por comas.")
-    descripcion = forms.CharField(widget=forms.Textarea)
-    fecha_inicio = datetime.now()
-    fecha_fin =forms.DateTimeField(widget=forms.SplitDateTimeWidget)
-    #estado = forms.ChoiceField(Apuesta.ESTADOS)
-    #visibilidad = forms.ChoiceField(Apuesta.VISIBILIDAD)
-    #tipo = forms.ChoiceField(Apuesta.TIPO)
-    #usuario= forms.ModelChoiceField(queryset=User.objects.all(), empty_label=None,)#, widget=forms.MultipleHiddenInput
-    #imagen = forms.ImageField(required=False)
-    
-    def save(self):
-        if self.is_valid():
-            data=self.cleaned_data
-            data["estado"]='a'
-            data["visibilidad"]='pu'
-            #data["tipo"]='gpe'
-            a = Apuesta.objects.create(titulo=data['titulo'], opciones=data['opciones'], descripcion=data['descripcion'], user=data['usuario'], categoria=data['categoria'], fecha_fin=data['fecha_fin'], estado=data['estado'], visibilidad=data['visibilidad'] )
-        return a.save()
-    
-    def clean_fecha_fin(self):
-        fecha_fin_valid = self.cleaned_data['fecha_fin']
-        if (fecha_fin_valid-timedelta(hours=1)) < timezone.now() :
-            raise forms.ValidationError("La apuesta debe tener al menos una hora de duracion.")
-   
-        return fecha_fin_valid
-"""
-
+    #opciones = forms.CharField(widget=forms.Textarea,help_text="Pon las distintas opciones de la apuesta separadas por comas.")
 class usuarioForm(UserCreationForm):#forms.Form):
     fecha_nacimiento = forms.DateField(widget=forms.DateInput(attrs= {'class':'datepicker'}))
     #telefono =es.forms.ESPhoneNumberField()
@@ -114,5 +75,44 @@ class ParticipacionForm(ModelForm):
         model=Participacion
         exclude = ('user','apuesta','timestamp')
         
-    
 
+class introducirDinero(forms.Form):
+    cantidad = forms.IntegerField(min_value=1)
+    perfil = forms.ModelChoiceField(queryset=Perfil.objects.all(), empty_label=None)
+    def save(self):
+        if self.is_valid():
+            perfil=self.cleaned_data["perfil"]
+            cantidad=self.cleaned_data["cantidad"]
+            perfil.dinero+=cantidad
+            perfil.save()
+
+""" 
+class ApuestaForm(forms.Form):
+    titulo = forms.CharField(max_length=250)
+    categoria = forms.ModelChoiceField(queryset=Categoria.objects.all(), empty_label=None)
+    opciones = forms.CharField(widget=forms.Textarea,help_text="Pon las distintas opciones de la apuesta separadas por comas.")
+    descripcion = forms.CharField(widget=forms.Textarea)
+    fecha_inicio = datetime.now()
+    fecha_fin =forms.DateTimeField(widget=forms.SplitDateTimeWidget)
+    #estado = forms.ChoiceField(Apuesta.ESTADOS)
+    #visibilidad = forms.ChoiceField(Apuesta.VISIBILIDAD)
+    #tipo = forms.ChoiceField(Apuesta.TIPO)
+    #usuario= forms.ModelChoiceField(queryset=User.objects.all(), empty_label=None,)#, widget=forms.MultipleHiddenInput
+    #imagen = forms.ImageField(required=False)
+    
+    def save(self):
+        if self.is_valid():
+            data=self.cleaned_data
+            data["estado"]='a'
+            data["visibilidad"]='pu'
+            #data["tipo"]='gpe'
+            a = Apuesta.objects.create(titulo=data['titulo'], opciones=data['opciones'], descripcion=data['descripcion'], user=data['usuario'], categoria=data['categoria'], fecha_fin=data['fecha_fin'], estado=data['estado'], visibilidad=data['visibilidad'] )
+        return a.save()
+    
+    def clean_fecha_fin(self):
+        fecha_fin_valid = self.cleaned_data['fecha_fin']
+        if (fecha_fin_valid-timedelta(hours=1)) < timezone.now() :
+            raise forms.ValidationError("La apuesta debe tener al menos una hora de duracion.")
+   
+        return fecha_fin_valid
+"""

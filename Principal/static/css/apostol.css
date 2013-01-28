@@ -188,8 +188,14 @@ a.btnA:hover{
 .imgCategoria{
 	margin: 5px;
 	padding: 5px;
-	border: 1px #EEE solid;
+	border: 1px #888 solid;
 	height: 80px;
+	min-width: 100px;
+}
+
+.imgCatminsize{
+	min-width: 100px;
+	min-height: 90px
 }
 
 .infoBox{

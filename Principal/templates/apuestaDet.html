@@ -11,8 +11,8 @@
 			<p class="hwcenter">Abierta hasta el {{apuesta.fecha_fin}}.</p>
 			<p class="hwcenter">{{apuesta.getNparticipantes}} Participantes.</p>
 		</div>
-		<div>
-			<img class="imgCategoria" src="{{ MEDIA_URL }}imgCategoria/{{apuesta.categoria.imagen}}" alt="{{apuesta.categoria}}"/>
+		<div class="imgCatminsize">
+			<img class="imgCategoria" src="{{ MEDIA_URL }}{{apuesta.categoria.imagen}}" alt="{{apuesta.categoria}}"/>
 		</div>
 	</div>
 	<div class="BorderBox">

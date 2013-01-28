@@ -172,58 +172,28 @@ def fijarGanador(request,id_apuesta,opcion):
     apuesta.save()
     ratios=apuesta.ratios()
     
-    """multiplicador=ratios["ratios"][opcion]
+    print ratios
+    print opcion
+    multiplicador=ratios[int(opcion)]
     if Participacion.objects.filter(opcion=opcion).filter(apuesta=apuesta).count()==0:
         mensaje="Opcion ganadora registrada. No hay ningun ganador."
     else:
         participaciones=Participacion.objects.filter(opcion=opcion).filter(apuesta=apuesta)
         for participante in participaciones:
-            user=Perfil.objects.get(participante.user)
+            user=Perfil.objects.get(user=participante.user)
             user.dinero+=participante.cantidad*multiplicador
-            user.save()    
-        mensaje="Opcion ganadora registrada. El dinero ha sido repartido entre los ganadores.
-    """
+            user.save()
+        mensaje="Opción ganadora registrada. El dinero ha sido repartido entre los ganadores."
+
     return render_to_response('mensaje.html',{'mensaje':mensaje},context_instance=RequestContext(request))
 
     
-    
-    
-    
-    
-    #return render_to_response('apuestaDet.html',{'apuesta':apuesta,
-    #                                             'ratios':ratios,
-    #                                             'mensaje':mensaje,
-    #                                             'participaciones':participaciones},context_instance=RequestContext(request))
-"""
-def calcualteRatios(id_apuesta):
-    ap= get_object_or_404(Apuesta, pk=id_apuesta)
-    participaciones=Participacion.objects.filter(apuesta=ap)
-    n=Participacion.objects.filter(apuesta=ap).count()
-    if n==0:
-        return 0
-    nOpciones=len(ap.opciones.split())
-    dineroClasificado=[0]*nOpciones
-    for par in participaciones:
-        ###########################################################################################
-        ############## CAMBIAR el 0 del indice por int(par.opcion)
-        ###########################################################################################
-        dineroClasificado[0]=+par.cantidad
-        #print "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee %s" % str(int(par.opcion))
-    dineroTotal=0
-    for d in dineroClasificado:
-        dineroTotal+=d
-    ratios=[0]*nOpciones
-    i=0
-    if dineroTotal==0:
-        return 0
-    for d in dineroClasificado:
-        if d!=0:
-            ratios[i]=100/(d/dineroTotal)
-        i+=1
-    print ratios,dineroTotal,n
-    return ratios,dineroTotal,n
-    """
+@staff_member_required
+def agregaDinero(request):
+    formulario=introducirDinero(request.POST)
+    if formulario.is_valid():
+        formulario.save()
+        return render_to_response('mensaje.html',{'mensaje':'Dinero introducido en el perfil del usuario'},context_instance=RequestContext(request))
         
-#return render_to_response('my_template.html',
-#                          my_data_dictionary,
-#                          context_instance=RequestContext(request))
+    return render_to_response('introduceDinero.html',{'formulario':formulario}, context_instance=RequestContext(request))
+    

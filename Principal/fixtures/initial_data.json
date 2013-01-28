@@ -2,22 +2,22 @@
 	{
 	"model": "Principal.Categoria",
 	"pk": 1,
-	"fields": {      "slug": "futbol",      "nombre": "Fútbol",	"imagen":"fubol.png"  	}
+	"fields": {      "slug": "futbol",      "nombre": "Fútbol",	"imagen":"imgCategoria/futbol.png"  	}
 	},
 	{
 	"model": "Principal.Categoria",
 	"pk": 2,
-	"fields": {      "slug": "baloncesto",      "nombre": "Baloncesto",	"imagen":"baloncesto.png"   }
+	"fields": {      "slug": "baloncesto",      "nombre": "Baloncesto",	"imagen":"imgCategoria/baloncesto.png"   }
 	},
 	{
 	"model": "Principal.Categoria",
 	"pk": 3,
-	"fields": {      "slug": "F1",      "nombre": "Fórmula 1",	"imagen":"F1.png"      }
+	"fields": {      "slug": "F1",      "nombre": "Fórmula 1",	"imagen":"imgCategoria/F1.png"      }
 	},
 	{
 	"model": "Principal.Categoria",
 	"pk": 4,
-	"fields": {      "slug": "otras",      "nombre": "Sin categoría",	"imagen":"sinCategorial.png"    }
+	"fields": {      "slug": "otras",      "nombre": "Sin categoría",	"imagen":"imgCategoria/sinCategorial.png"    }
 	},
 	{
 	"model": "Principal.Perfil",
@@ -37,5 +37,10 @@
 	"model": "Principal.Apuesta",
 	"pk": 1,
 	"fields": {"titulo": "Prueba", "opciones": "op1, op2, op3", "descripcion":"Apuesta de prueba","user":1, "categoria":4,  "fecha_inicio":"2013-01-01T13:20:30+03:00","fecha_fin":"2014-09-01T13:20:30+03:00","estado":"a","visibilidad":"pu"}
+	},
+	{
+	"model": "Principal.Apuesta",
+	"pk": 2,
+	"fields": {"titulo": "Prueba", "opciones": "F.Alonso, L.Hamilton, J.Button, F.Massa", "descripcion":"¿Quien ganara la F1?","user":1, "categoria":3,  "fecha_inicio":"2013-01-01T13:20:30+03:00","fecha_fin":"2013-02-10T13:20:30+03:00","estado":"a","visibilidad":"pu"}
 	}
 ]

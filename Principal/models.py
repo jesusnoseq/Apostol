@@ -117,7 +117,7 @@ class Apuesta(models.Model):
 
     def clean(self):
         if len(self.getOpciones())<2:
-            raise ValidationError("Número de opciones no validas.")
+            raise ValidationError("Número de opciones no validas. Pon las distintas opciones de la apuesta separadas por comas.")
         if len(self.getOpciones()) != len(set(self.getOpciones())):
             raise ValidationError("No se permiten opciones repetidas.")
         if self.opcion_ganadora:
@@ -127,7 +127,6 @@ class Apuesta(models.Model):
                 raise ValidationError("Opcion ganadora no valida.")
         return super(Apuesta,self).clean()
 
-    
 class Participacion(models.Model):
     user = models.ForeignKey(User)
     apuesta = models.ForeignKey(Apuesta)
@@ -141,11 +140,4 @@ class Participacion(models.Model):
         #return Apuesta.objects.get(self.apuesta).getOpciones()[self.opcion]
     def __unicode__(self):
         return u"%s apuesta en %s: %ium a la opcion (%s)" % (self.user.username, self.apuesta, self.cantidad,self.opcion)
-    """def clean(self):
-        if self.opcion and self.apuesta:
-            opcion_valid = self.opcion
-            nopciones=len(self.apuesta.getOpciones())
-            if opcion_valid >= nopciones or opcion_valid<0:
-                raise ValidationError("Opcion no valida.")
-        return super(Participacion,self).clean()"""
 
