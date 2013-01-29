@@ -1,8 +1,5 @@
 <nav>
 	<ul class="pull-right userMenu">
-
-		<!--<li><a class="btn" href="/apuestas/">Apuestas</a></li>
-		<li><a class="btn" href="/categorias/">Categorias</a></li>-->
 		{% if user.is_staff %}
 			<li><a class="btnA btnA-small" href="/apuesta/nueva/">Crear apuesta</a></li>
 			<li><a class="btnA btnA-small" href="/categoria/nueva/">Crear categoría</a></li>

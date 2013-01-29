@@ -1,12 +1,9 @@
 #encoding:utf-8
-
-from django.utils import timezone
-from datetime import datetime,date, timedelta
+from datetime import date, timedelta
 from django.db import models
 from django.contrib.auth.models import User 
 from django.core.exceptions import ValidationError
 from django.template import defaultfilters
-from django.utils.functional import empty
 
 class Perfil(models.Model):
     user = models.ForeignKey(User, unique=True)
@@ -22,7 +19,7 @@ class Perfil(models.Model):
 
     def clean(self):
         fecha_nacimiento_valid = self.fecha_nacimiento
-        fecha_nacimiento_valid=(fecha_nacimiento_valid+timedelta(days=6574))
+        fecha_nacimiento_valid=(fecha_nacimiento_valid+timedelta(days=6574)) #18 años exactos
         if fecha_nacimiento_valid >= date.today():
             raise ValidationError("El usuario debe ser mayor de edad.")
         return super(Perfil,self).clean()
@@ -33,7 +30,7 @@ class Categoria(models.Model):
     slug = models.SlugField(blank=False,unique=True)
     nombre = models.CharField(max_length=250,unique=True)
     imagen = models.ImageField(upload_to='imgCategoria',blank=True)
-    #subcategoria = models.ForeignKey(Categoria, blank=True)
+    #subcategoria = models.ForeignKey(Categoria,null=True, blank=True)
     def get_absolute_url(self):
         return "/categoria/%s/" % self.slug
     def __unicode__(self):
@@ -73,18 +70,23 @@ class Apuesta(models.Model):
         ordering = ['fecha_fin'] # el que menos tiempo le queda primero
     def __unicode__(self):
         return u"%s" % self.titulo
+    
     def get_absolute_url(self):
         return "/apuesta/%i/%s" % (self.id, defaultfilters.slugify(self.titulo))
+    
     def getOpciones(self):
         return [i.strip() for i in self.opciones.split(',')]
+    
     def getVerboseWinOption(self):
         return self.getOpciones()[self.opcion_ganadora]
+    
     def getNparticipantes(self):
         return Participacion.objects.filter(apuesta=self).count();
+    
     def ratios(self):
         participaciones=Participacion.objects.filter(apuesta=self)
         n=Participacion.objects.filter(apuesta=self).count()
-        #print "Participaciones: "+str(n)
+
         nOpciones=len(self.getOpciones())
         if n==0:
             return [0]*nOpciones
@@ -93,29 +95,26 @@ class Apuesta(models.Model):
         for par in participaciones:
             dineroClasificado[par.opcion]+=par.cantidad
         dineroTotal=0
-        #print "Dinero clasificado"
-        #print dineroClasificado
+
         for d in dineroClasificado:
             dineroTotal+=d
-        #print "dinero total:"+str(dineroTotal)
+
         ratios=[0]*nOpciones
         i=0
         if dineroTotal==0:
             return [0]*nOpciones
         for d in dineroClasificado:
             if d==0:
-                ratios[i]='0'
+                ratios[i]=0
             else:
                 ratios[i]=100/((d/dineroTotal)*100)
             i+=1
-        #print ratios,dineroTotal,n
         return ratios
+    
     def optionsWithRatios(self):
         pack=zip(self.getOpciones(), self.ratios())
         return pack
         
-        
-
     def clean(self):
         if len(self.getOpciones())<2:
             raise ValidationError("Número de opciones no validas. Pon las distintas opciones de la apuesta separadas por comas.")
@@ -128,6 +127,8 @@ class Apuesta(models.Model):
                 raise ValidationError("Opcion ganadora no valida.")
         return super(Apuesta,self).clean()
 
+
+
 class Participacion(models.Model):
     user = models.ForeignKey(User)
     apuesta = models.ForeignKey(Apuesta)
@@ -136,9 +137,9 @@ class Participacion(models.Model):
     opcion = models.SmallIntegerField(null=False)
     class Meta:
         verbose_name_plural='Participaciones'
+        ordering = ['-timestamp'] 
     def getVerboseOption(self):
         return self.apuesta.getOpciones()[self.opcion]
-        #return Apuesta.objects.get(self.apuesta).getOpciones()[self.opcion]
     def __unicode__(self):
         return u"%s apuesta en %s: %ium a la opcion (%s)" % (self.user.username, self.apuesta, self.cantidad,self.opcion)
 

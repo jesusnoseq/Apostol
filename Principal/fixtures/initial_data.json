@@ -31,7 +31,7 @@
 	{
 	"model": "Principal.Perfil",
 	"pk": 2,
-	"fields": {"user": 2, "dinero":100, "fecha_nacimiento":"1989-09-06"}
+	"fields": {"user": 2, "dinero":200, "fecha_nacimiento":"1989-09-06"}
 	},
 	{
 	"model": "Principal.Apuesta",
@@ -47,5 +47,25 @@
 	"model": "Principal.Apuesta",
 	"pk": 3,
 	"fields": {"titulo": "¿Lloverá en semana santa?", "opciones": "Si, No", "descripcion":"¿Que pasará entonces?","user":1, "categoria":4,  "fecha_inicio":"2013-01-01T13:20:30+03:00","fecha_fin":"2013-04-01T00:00:00+02:00","estado":"a","visibilidad":"pu"}
+	},
+	{
+	"model": "Principal.Apuesta",
+	"pk": 4,
+	"fields": {"titulo": "R.Madrid VS Barcelona", "opciones": "R.Madrid, x, Barcelona", "descripcion":"Partido de futbol Real Madrid VS Barcelona","user":1, "categoria":1,  "fecha_inicio":"2013-01-01T13:20:30+03:00","fecha_fin":"2013-03-02T20:00:00+02:00","estado":"a","visibilidad":"pu"}
+	},
+	{
+	"model": "Principal.Participacion",
+	"pk": 1,
+	"fields": {"user":1, "apuesta":1, "opcion":0, "cantidad":50, "timestamp":"2013-02-01T13:20:30+03:00"}
+	},
+	{
+	"model": "Principal.Participacion",
+	"pk": 2,
+	"fields": {"user":1, "apuesta":1, "opcion":1, "cantidad":75, "timestamp":"2013-02-01T13:20:30+03:00"}
+	},
+	{
+	"model": "Principal.Participacion",
+	"pk": 3,
+	"fields": {"user":2, "apuesta":1, "opcion":2, "cantidad":20, "timestamp":"2013-02-01T13:20:30+03:00"}
 	}
 ]

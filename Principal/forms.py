@@ -2,17 +2,18 @@
 
 from django import forms
 from django.forms import ModelForm
-from django.contrib.localflavor import es
-from datetime import datetime, timedelta
 from django.utils import timezone
+from datetime import date, timedelta
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
-from Principal.models import *
+from Principal.models import Categoria, Apuesta, Participacion, Perfil
+
 
 
 class CategoriaForm(ModelForm):
     class Meta:
         model=Categoria
+
+
 
 class ApuestaForm(ModelForm):
     
@@ -22,7 +23,6 @@ class ApuestaForm(ModelForm):
             raise forms.ValidationError("La apuesta debe tener al menos una hora de duracion.")
         return fecha_fin_valid
 
-
     class Meta:
         model=Apuesta
         exclude=('user','fecha_inicio','estado','visibilidad','opcion_ganadora')
@@ -30,14 +30,14 @@ class ApuestaForm(ModelForm):
             'fecha_fin': forms.SplitDateTimeWidget(),
             'opciones': forms.Textarea(attrs={'title': "Pon las distintas opciones de la apuesta separadas por comas.",})
         }
-    #opciones = forms.CharField(widget=forms.Textarea,help_text="Pon las distintas opciones de la apuesta separadas por comas.")
-class usuarioForm(UserCreationForm):#forms.Form):
+
+    
+    
+    
+class usuarioForm(UserCreationForm):
     fecha_nacimiento = forms.DateField(widget=forms.DateInput(attrs= {'class':'datepicker'}))
     #telefono =es.forms.ESPhoneNumberField()
 
-    #exclude = ('user','dinero')
-    #class Meta:
-    #    model = Usuario
     def save(self, commit=True):
         user=super(usuarioForm, self).save(commit)
         d=self.cleaned_data
@@ -52,8 +52,10 @@ class usuarioForm(UserCreationForm):#forms.Form):
             raise forms.ValidationError("El usuario debe ser mayor de edad.")
         return fecha_nacimiento_valid
 
+
+
 class ParticipacionForm(ModelForm):
-    #widgets = {'cantidad ': forms.IntegerField(attrs={'class': 'slide'}), }
+
     def clean_cantidad(self):
         cantidad = self.cleaned_data['cantidad']
         us=self.user
@@ -76,6 +78,7 @@ class ParticipacionForm(ModelForm):
         exclude = ('user','apuesta','timestamp')
         
 
+
 class introducirDinero(forms.Form):
     cantidad = forms.IntegerField(min_value=1)
     perfil = forms.ModelChoiceField(queryset=Perfil.objects.all(), empty_label=None)
@@ -86,33 +89,3 @@ class introducirDinero(forms.Form):
             perfil.dinero+=cantidad
             perfil.save()
 
-""" 
-class ApuestaForm(forms.Form):
-    titulo = forms.CharField(max_length=250)
-    categoria = forms.ModelChoiceField(queryset=Categoria.objects.all(), empty_label=None)
-    opciones = forms.CharField(widget=forms.Textarea,help_text="Pon las distintas opciones de la apuesta separadas por comas.")
-    descripcion = forms.CharField(widget=forms.Textarea)
-    fecha_inicio = datetime.now()
-    fecha_fin =forms.DateTimeField(widget=forms.SplitDateTimeWidget)
-    #estado = forms.ChoiceField(Apuesta.ESTADOS)
-    #visibilidad = forms.ChoiceField(Apuesta.VISIBILIDAD)
-    #tipo = forms.ChoiceField(Apuesta.TIPO)
-    #usuario= forms.ModelChoiceField(queryset=User.objects.all(), empty_label=None,)#, widget=forms.MultipleHiddenInput
-    #imagen = forms.ImageField(required=False)
-    
-    def save(self):
-        if self.is_valid():
-            data=self.cleaned_data
-            data["estado"]='a'
-            data["visibilidad"]='pu'
-            #data["tipo"]='gpe'
-            a = Apuesta.objects.create(titulo=data['titulo'], opciones=data['opciones'], descripcion=data['descripcion'], user=data['usuario'], categoria=data['categoria'], fecha_fin=data['fecha_fin'], estado=data['estado'], visibilidad=data['visibilidad'] )
-        return a.save()
-    
-    def clean_fecha_fin(self):
-        fecha_fin_valid = self.cleaned_data['fecha_fin']
-        if (fecha_fin_valid-timedelta(hours=1)) < timezone.now() :
-            raise forms.ValidationError("La apuesta debe tener al menos una hora de duracion.")
-   
-        return fecha_fin_valid
-"""

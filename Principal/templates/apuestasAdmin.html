@@ -22,14 +22,34 @@
 					<a class="btnA btnA-small" href="gana/{{apuesta.id}}/{{forloop.counter0 }}">({{forloop.counter}}) {{opt.0}} [{{opt.1|floatformat:2}}] </a>
 				{% endfor %}
 			</div>
-			<div class="span1"><a class="btnA btnA-small" href="borra/{{apuesta.id}}">Borrar</a></div>
+			<div class="span1"><a class="btnA btnA-small borrar" href="borra/{{apuesta.id}}">Borrar</a></div>
 		</div>
 	</article>
 </li>
 {% empty %}
 	<li>No hay apuestas en este momento.</li>
 {% endfor %}
-</ul>
 
-</div>
 {% endblock%}
+{% block footerScripts %}
+<script>
+	$(document).ready(function(){
+		$('a.borrar').click(borrar);
+	});
+	
+	function borrar(event){
+		event.preventDefault()
+		event.stopPropagation();
+		var node=$(this);
+		var link = node.attr("href");
+		$.getJSON(link, {}, function(json) {
+			//console.log(json)
+			if(json.result=='ok'){
+				//console.log();
+				node.parent().parent().parent().parent().fadeOut('fast');
+			}
+		}).error(function() { node.parent().append("No se pudo borrar la apuesta."); });
+	}
+</script>
+
+{% endblock %}
