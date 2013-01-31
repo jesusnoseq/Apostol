@@ -36,7 +36,7 @@
 	{
 	"model": "Principal.Apuesta",
 	"pk": 1,
-	"fields": {"titulo": "Prueba", "opciones": "op1, op2, op3", "descripcion":"Apuesta de prueba","user":1, "categoria":4,  "fecha_inicio":"2013-01-01T13:20:30+03:00","fecha_fin":"2014-09-01T13:20:30+03:00","estado":"a","visibilidad":"pu"}
+	"fields": {"titulo": "Prueba", "opciones": "op1, op2, op3", "descripcion":"Apuesta de prueba","user":1, "categoria":4,  "fecha_inicio":"2013-01-01T13:20:30+03:00","fecha_fin":"2013-02-01T13:20:30+03:00","estado":"a","visibilidad":"pu"}
 	},
 	{
 	"model": "Principal.Apuesta",

@@ -144,11 +144,15 @@ a.btnA:hover{
 .mainList li{
 	border-bottom:1px dotted #C3C3C3;
 	/*border-bottom: 1px solid #ddd;
-    box-shadow: 0 1px 0 #ccc;*/
-	background:#FFE;
+    box-shadow: 0 1px 0 #ccc;
+	background:#FFE;*/
 	padding: 20px;
 	padding-top: 5px;
 	margin-bottom: 1px;
+}
+
+.mainList h3{
+	margin-left:10px;
 }
 
 .hwcenter{

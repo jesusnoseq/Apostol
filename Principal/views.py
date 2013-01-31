@@ -89,49 +89,54 @@ def detalleApuesta(request, id_apuesta):
                                                      'mensaje':mensaje,
                                                      'now':now,
                                                      'participaciones':participaciones},context_instance=RequestContext(request))
-    form=ParticipacionForm(request.POST)
-    form.user=request.user
-    form.apuesta=apuesta
-    if form.is_valid():
-        participacion = form.save(commit=False)
-        user=Perfil.objects.get(user=request.user)
-        participacion.user=request.user
-        participacion.apuesta=apuesta
-        participacion.save()
-        user.dinero-=participacion.cantidad
-        user.save()
-        mensaje="Apuesta realizada"
+    if request.method=='POST':
+        form=ParticipacionForm(request.POST)
+        form.user=request.user
+        form.apuesta=apuesta
+        if form.is_valid():
+            participacion = form.save(commit=False)
+            user=Perfil.objects.get(user=request.user)
+            participacion.user=request.user
+            participacion.apuesta=apuesta
+            participacion.save()
+            user.dinero-=participacion.cantidad
+            user.save()
+            mensaje="Apuesta realizada"
+    else:
+        form=ParticipacionForm()
 
     return render_to_response('apuestaDet.html',{'apuesta':apuesta,
                                                  'ratios':ratios,
                                                  'mensaje':mensaje,
                                                  'formulario':form,
-                                                 'participaciones':participaciones},
-                              context_instance=RequestContext(request))
+                                                 'participaciones':participaciones}, context_instance=RequestContext(request))
 
 
 
 @staff_member_required
 def nuevaCategoria(request):
-    formulario=CategoriaForm(request.POST)
-    if formulario.is_valid():
-        formulario.save()
-        return render_to_response('index.html',{'mensaje':'Categoria creada'},context_instance=RequestContext(request))
-        
+    if request.method=='POST':
+        formulario=CategoriaForm(request.POST,request.FILES)
+        if formulario.is_valid():
+            formulario.save()
+            return render_to_response('mensaje.html',{'mensaje':'Categoria creada'},context_instance=RequestContext(request))
+    else:
+        formulario=CategoriaForm()
     return render_to_response('categoriaForm.html',{'formulario':formulario}, context_instance=RequestContext(request))
 
 
 
 @staff_member_required
 def nuevaApuesta(request):
-    formulario=ApuestaForm(request.POST,request.FILES)
-    
-    if formulario.is_valid():
-        apuesta=formulario.save(commit=False)
-        apuesta.user=request.user
-        apuesta.save()
-        return render_to_response('mensaje.html',{'mensaje':'Apuesta creada'},context_instance=RequestContext(request))
-        
+    if request.method=='POST':
+        formulario=ApuestaForm(request.POST,request.FILES)
+        if formulario.is_valid():
+            apuesta=formulario.save(commit=False)
+            apuesta.user=request.user
+            apuesta.save()
+            return render_to_response('mensaje.html',{'mensaje':'Apuesta creada'},context_instance=RequestContext(request))
+    else:
+        formulario=ApuestaForm()
     return render_to_response('categoriaForm.html',{'formulario':formulario}, context_instance=RequestContext(request))
 
 
@@ -186,10 +191,13 @@ def fijarGanador(request,id_apuesta,opcion):
     
 @staff_member_required
 def agregaDinero(request):
-    formulario=introducirDinero(request.POST)
-    if formulario.is_valid():
-        formulario.save()
-        return render_to_response('mensaje.html',{'mensaje':'Dinero introducido en el perfil del usuario'},context_instance=RequestContext(request))
+    if request.method=='POST':
+        formulario=introducirDinero(request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            return render_to_response('mensaje.html',{'mensaje':'Dinero introducido en el perfil del usuario'},context_instance=RequestContext(request))
+    else:
+        formulario=introducirDinero()
         
     return render_to_response('introduceDinero.html',{'formulario':formulario}, context_instance=RequestContext(request))
     
