@@ -26,7 +26,7 @@
 	},
 	{ "model": "auth.user",
 	"pk": 2,
-	"fields": {"username": "user1", "password": "pbkdf2_sha256$10000$4aZ9iNbfYtcP$AMrr6GS2Mgfg5Y8UMkwdrEFRTna94KtbB+3W6nPdvOI=", "email":"user1@mail.com"}
+	"fields": {"username": "user1", "password": "pbkdf2_sha256$10000$4aZ9iNbfYtcP$AMrr6GS2Mgfg5Y8UMkwdrEFRTna94KtbB+3W6nPdvOI=", "email":"user1@apostol.com"}
 	},
 	{
 	"model": "Principal.Perfil",

@@ -35,6 +35,18 @@ donde las opciones posibles para apostar son listas y las participaciones en las
 	</ul>
 </p>
 
-
+<h3>Notas sobre el funcionamiento y otras cuestiones</h3>
+<ul>
+	<li>Usuario administrador inicial: admin | password: password</li>
+	<li>Usuario inicial: user1 | password: password</li>
+	<li>Al sincronizar la base de datos se crea el perfil para el admin en la aplicación y el usuario user1 además de algún ejemplo de apuesta.</li>
+	<li>Los usuarios normales no pueden crear apuestas.</li>
+	<li>Después de crear una apuesta hay que indicar que opción es la ganadora desde la administración de apuestas (botón "Administrar apuestas").</li>
+	<li>En el menú de administración de apuestas solo se muestran las apuestas pendientes de indicar la opción ganadora.</li>
+	<li>Se puede indicar la opción ganadora antes de acabar la apuesta, en ese caso la apuesta acaba inmediatamente.</li>
+	<li>El dinero de cada usuario se puede ver en su perfil.</li>
+	<li>En caso nadie apueste por una opción en concreto la cuota que aparece es 0.00, significa que en caso de apostar por esa opción te llevas todo el dinero.</li>
+	<li>Se puede apostar varias veces sobre una misma apuesta.</li>
+</ul>
 </div>
 {% endblock %}
